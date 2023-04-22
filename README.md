@@ -169,6 +169,21 @@ PHONE_IN_BAG
 ```
 </details>
 
+### Adding New Model Architectures
+
+You can add a new model architecture by following these steps:
+
+1. Add the model's class definition to `models.py`.
+1. Give your model architecture an identifier. For this example, let's assume the identifier is `custom_nn`.
+1. In the `models.get_input_size` function, add an if branch for returning the input size needed by the `custom_nn` model object.
+1. In the `models.get_model_obj` function, add an if branch for returning the `custom_nn` model object.
+1. Optional, update if `custom_nn` needs a particular input data format: In the `models.get_channels_format` function, add an if branch for returning the channels format needed by the `custom_nn` model object. If you need a new channels format, give it an identifier.
+
+If your model architecture uses a new channels format, you will need to make additional changes:
+1. In `train_test.py`, add an if branch in the `train` and `test` functions to modify the data shape according to your new channels format.
+1. In `model_performance.py`, add an if branch in the `compute_accuracy` function to modify the data shape according to your new channels format.
+1. In `membership_inference.py`, add an if branch in the `get_loss_values` function to modify the data shape according to your new channels format.
+
 ## Reproducibility
 
 To reproduce the visualizations shown in the project, run `python repro_visual.py`.
