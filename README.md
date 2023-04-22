@@ -70,7 +70,7 @@ test_split_uuid_filepaths: # list of users (identified by their UUIDs) to be inc
   - "./cv_5_folds/fold_0_test_iphone_uuids.txt"
 sensors_to_use: # list of sensor measurements to be used by the HAR model
   - # see supported values below
-target_labels: # list activity labels to be learnt by the HAR model
+target_labels: # list of activity labels to be learnt by the HAR model
   - # see supported values below
 batch_size: int # batch size for training non-private and private models
 shuffle_train: boolean # true: shuffle order of train data, false: fix order of train data 
@@ -84,8 +84,8 @@ private_args:
 
 <details>
 	<summary>List of supported model architectures</summary>
-	
-	```
+
+	```text
 	simple_nn
 	cnn
 	```
@@ -94,7 +94,7 @@ private_args:
 <details>
 <summary>List of supported sensor measurements:</summary>
 
-	```
+	```text
 	Acc
 	Gyro
 	Magnet
@@ -109,9 +109,9 @@ private_args:
 </details>
 
 <details>
-  <summary>List of supported target labels:</summary>
+  <summary>List of supported activity labels:</summary>
 
-  	```
+  	```text
 	PHONE_ON_TABLE
 	SITTING
 	OR_indoors
