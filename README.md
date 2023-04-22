@@ -1,8 +1,8 @@
 # ExtraSensory DP
 
-## Introduction 
-
 This repository contains code for the experiments of CMU's Engineering Privacy in Software course project: "Using Differential Privacy: Mobile Activity". 
+
+## Introduction 
 
 We apply differential privacy to human-activity recognition (HAR) machine learning models trained on the ExtraSensory dataset [1]. We use Opacus [2], a differential privacy library for training PyTorch models, to train our private models. We empirically demonstrate how this reduces privacy risk by comparing the attack performance of a membership inference adversary on non-private and private versions of our HAR models.
 
@@ -83,93 +83,93 @@ private_args:
 ```
 
 <details>
-	<summary>Supported Model Architectures</summary>
+<summary>Supported Model Architectures</summary>
 
-	List of supported model architectures:
+List of supported model architectures:
 
-	```
-	simple_nn
-	cnn
-	```
+```
+simple_nn
+cnn
+```
 </details>
 
 <details>
 <summary>Supported Sensor Measurements</summary>
 
-	List of supported sensor measurements:
+List of supported sensor measurements:
 
-	```
-	Acc
-	Gyro
-	Magnet
-	WAcc
-	Compass
-	Loc
-	Aud
-	AP
-	PS
-	LF
-	```
+```
+Acc
+Gyro
+Magnet
+WAcc
+Compass
+Loc
+Aud
+AP
+PS
+LF
+```
 </details>
 
 <details>
-  <summary>Supported Activity Labels</summary>
+<summary>Supported Activity Labels</summary>
 
-  List of supported activity labels:
+List of supported activity labels:
 
-  	```
-	PHONE_ON_TABLE
-	SITTING
-	OR_indoors
-	LOC_home
-	LYING_DOWN
-	TALKING
-	SLEEPING
-	LOC_main_workplace
-	PHONE_IN_POCKET
-	EATING
-	WATCHING_TV
-	SURFING_THE_INTERNET
-	OR_standing
-	FIX_walking
-	OR_outside
-	WITH_FRIENDS
-	PHONE_IN_HAND
-	COMPUTER_WORK 
-	WITH_CO-WORKERS 
-	DRESSING 
-	COOKING 
-	WASHING_DISHES 
-	ON_A_BUS 
-	GROOMING 
-	DRIVE_-_I_M_THE_DRIVER 
-	TOILET 
-	AT_SCHOOL 
-	IN_A_CAR 
-	DRINKING__ALCOHOL_ 
-	IN_A_MEETING 
-	DRIVE_-_I_M_A_PASSENGER 
-	BATHING_-_SHOWER 
-	STROLLING
-	SINGING
-	SHOPPING
-	FIX_restaurant
-	DOING_LAUNDRY
-	FIX_running
-	OR_exercise
-	STAIRS_-_GOING_UP
-	STAIRS_-_GOING_DOWN
-	BICYCLING
-	LAB_WORK
-	IN_CLASS
-	CLEANING
-	AT_A_PARTY
-	AT_A_BAR
-	LOC_beach
-	AT_THE_GYM
-	ELEVATOR
-	PHONE_IN_BAG
-	```
+```
+PHONE_ON_TABLE
+SITTING
+OR_indoors
+LOC_home
+LYING_DOWN
+TALKING
+SLEEPING
+LOC_main_workplace
+PHONE_IN_POCKET
+EATING
+WATCHING_TV
+SURFING_THE_INTERNET
+OR_standing
+FIX_walking
+OR_outside
+WITH_FRIENDS
+PHONE_IN_HAND
+COMPUTER_WORK 
+WITH_CO-WORKERS 
+DRESSING 
+COOKING 
+WASHING_DISHES 
+ON_A_BUS 
+GROOMING 
+DRIVE_-_I_M_THE_DRIVER 
+TOILET 
+AT_SCHOOL 
+IN_A_CAR 
+DRINKING__ALCOHOL_ 
+IN_A_MEETING 
+DRIVE_-_I_M_A_PASSENGER 
+BATHING_-_SHOWER 
+STROLLING
+SINGING
+SHOPPING
+FIX_restaurant
+DOING_LAUNDRY
+FIX_running
+OR_exercise
+STAIRS_-_GOING_UP
+STAIRS_-_GOING_DOWN
+BICYCLING
+LAB_WORK
+IN_CLASS
+CLEANING
+AT_A_PARTY
+AT_A_BAR
+LOC_beach
+AT_THE_GYM
+ELEVATOR
+PHONE_IN_BAG
+```
 </details>
 
 ## Reproducibility
