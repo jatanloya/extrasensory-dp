@@ -1,0 +1,12 @@
+matplotlib
+numpy
+opacus==1.4.0
+pandas
+PyYAML
+scikit-learn
+scipy
+seaborn
+torch==1.13.1
+torchaudio
+torchvision
+tqdm

@@ -1,0 +1,27 @@
+exp_id: "cnn_epochs25_eps0_125_delta1e_5_clipnorm1.0"
+model_type: "cnn"
+user_data_files_directory: "./ExtraSensory.per_uuid_features_labels"
+exp_data_directory: "./exp_data"
+train_split_uuid_filepaths:
+  - "./cv_5_folds/fold_0_train_android_uuids.txt"
+  - "./cv_5_folds/fold_0_train_iphone_uuids.txt"
+test_split_uuid_filepaths:
+  - "./cv_5_folds/fold_0_test_android_uuids.txt"
+  - "./cv_5_folds/fold_0_test_iphone_uuids.txt"
+sensors_to_use:
+  - "Acc"
+  - "WAcc"
+  - "Loc"
+  - "Aud"
+target_labels:
+  - "FIX_walking"
+  - "LYING_DOWN"
+  - "SITTING"
+batch_size: 64
+shuffle_train: Yes
+epochs: 25
+lr: 0.0005
+private_args:
+  epsilon: 0.125
+  delta: 1.0e-5
+  clipping_norm: 1.0
