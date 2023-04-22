@@ -51,7 +51,7 @@ We have provided the experiment configuration files used in the project [here](h
 
 ### Modifying Configuration Files
 
-An experiment configuration file lets you specify filepaths and hyperparameters you would need for an experiment. 
+An experiment configuration file lets you specify filepaths and hyperparameters you would need for an experiment. We use the `YAML` file format.  
 
 A configuration file must follow a strict format:
 
@@ -83,18 +83,22 @@ private_args:
 ```
 
 <details>
-	<summary>List of supported model architectures</summary>
+	<summary>Supported Model Architectures</summary>
 
-	```text
+	List of supported model architectures:
+
+	```
 	simple_nn
 	cnn
 	```
 </details>
 
 <details>
-<summary>List of supported sensor measurements:</summary>
+<summary>Supported Sensor Measurements</summary>
 
-	```text
+	List of supported sensor measurements:
+
+	```
 	Acc
 	Gyro
 	Magnet
@@ -109,9 +113,11 @@ private_args:
 </details>
 
 <details>
-  <summary>List of supported activity labels:</summary>
+  <summary>Supported Activity Labels</summary>
 
-  	```text
+  List of supported activity labels:
+
+  	```
 	PHONE_ON_TABLE
 	SITTING
 	OR_indoors
