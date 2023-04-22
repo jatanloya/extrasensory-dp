@@ -85,7 +85,6 @@ private_args:
 <details>
 <summary>Supported Model Architectures</summary>
 
-List of supported model architectures:
 
 ```
 simple_nn
@@ -96,7 +95,6 @@ cnn
 <details>
 <summary>Supported Sensor Measurements</summary>
 
-List of supported sensor measurements:
 
 ```
 Acc
@@ -115,7 +113,6 @@ LF
 <details>
 <summary>Supported Activity Labels</summary>
 
-List of supported activity labels:
 
 ```
 PHONE_ON_TABLE
