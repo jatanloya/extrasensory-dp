@@ -32,7 +32,7 @@ def compute_accuracy(model, device, dataloader, channels_format=None):
     return total_acc
 
 
-def plot_train_and_test_loss_per_epoch(model_id, train_losses, test_losses):
+def plot_train_and_test_loss_per_epoch(model_id, train_losses, test_losses, filename):
     fig, ax = plt.subplots()
 
     ax.plot(train_losses, label='Train Loss')
@@ -43,10 +43,10 @@ def plot_train_and_test_loss_per_epoch(model_id, train_losses, test_losses):
     ax.set_ylabel("Loss")
 
     ax.legend()
-    plt.show()
+    plt.savefig(filename, dpi=500)
 
 
-def plot_train_and_test_acc_per_epoch(model_id, train_accs, test_accs):
+def plot_train_and_test_acc_per_epoch(model_id, train_accs, test_accs, filename):
     fig, ax = plt.subplots()
 
     ax.plot(train_accs, label='Train Acc')
@@ -57,4 +57,4 @@ def plot_train_and_test_acc_per_epoch(model_id, train_accs, test_accs):
     ax.set_ylabel("Acc")
 
     ax.legend()
-    plt.show()
+    plt.savefig(filename, dpi=500)

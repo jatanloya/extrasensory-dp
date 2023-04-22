@@ -139,8 +139,19 @@ if __name__ == "__main__":
                  test_accs=non_private_test_accs)
 
     # Plot model performance graphs
-    plot_train_and_test_loss_per_epoch(non_private_model_id, non_private_train_losses, non_private_test_losses)
-    plot_train_and_test_acc_per_epoch(non_private_model_id, non_private_train_accs, non_private_test_accs)
+    non_private_model_id_str = non_private_model_id.replace(".", "_")
+    plot_train_and_test_loss_per_epoch(
+        "Non-private Model", 
+        non_private_train_losses, 
+        non_private_test_losses,
+        f"{exp_data_dir}/plots_data/{non_private_model_id_str}_loss_per_epoch"
+    )
+    plot_train_and_test_acc_per_epoch(
+        "Non-private model", 
+        non_private_train_accs, 
+        non_private_test_accs,
+        f"{exp_data_dir}/plots_data/{non_private_model_id_str}_acc_per_epoch"
+    )
 
     # Run membership inference attack on model without DP
     per_sample_loss_values_filepath = f"{exp_data_dir}/plots_data/{exp_id}_per_sample_loss_values_non_private.npz"
@@ -163,8 +174,17 @@ if __name__ == "__main__":
         np.savez(per_sample_loss_values_filepath,
                  per_sample_train_losses=non_private_train_loss_values,
                  per_sample_test_losses=non_private_test_loss_values)
-    plot_train_and_test_losses(non_private_train_loss_values, non_private_test_loss_values)
-    get_mia_model_roc_curve(non_private_train_loss_values, non_private_test_loss_values)
+    plot_train_and_test_losses(
+        non_private_train_loss_values, 
+        non_private_test_loss_values,
+        f"{exp_data_dir}/plots_data/{non_private_model_id_str}_per_sample_losses"
+    )
+    fpr, tpr = get_mia_model_roc_curve(
+        non_private_train_loss_values,
+        non_private_test_loss_values,
+        f"{exp_data_dir}/plots_data/{non_private_model_id_str}_mia_roc"
+    )
+    np.savez(f"{exp_data_dir}/plots_data/{non_private_model_id}_mia_roc_data.npz", fpr=fpr, tpr=tpr)
 
     # Define args for training model with DP
     private_args = {
@@ -239,8 +259,19 @@ if __name__ == "__main__":
                  test_accs=private_test_accs)
 
     # Plot model performance graphs
-    plot_train_and_test_loss_per_epoch(private_model_id, private_train_losses, private_test_losses)
-    plot_train_and_test_acc_per_epoch(private_model_id, private_train_accs, private_test_accs)
+    private_model_id_str = private_model_id.replace(".", "_")
+    plot_train_and_test_loss_per_epoch(
+        "Private Model", 
+        private_train_losses, 
+        private_test_losses,
+        f"{exp_data_dir}/plots_data/{private_model_id_str}_loss_per_epoch"
+    )
+    plot_train_and_test_acc_per_epoch(
+        "Private model", 
+        private_train_accs, 
+        private_test_accs,
+        f"{exp_data_dir}/plots_data/{private_model_id_str}_acc_per_epoch"
+    )
 
     # Run membership inference attack on model without DP
     per_sample_loss_values_filepath = f"{exp_data_dir}/plots_data/{exp_id}_per_sample_loss_values_private.npz"
@@ -263,6 +294,15 @@ if __name__ == "__main__":
         np.savez(per_sample_loss_values_filepath,
                  per_sample_train_losses=private_train_loss_values,
                  per_sample_test_losses=private_test_loss_values)
-    plot_train_and_test_losses(private_train_loss_values, private_test_loss_values)
-    get_mia_model_roc_curve(private_train_loss_values, private_test_loss_values)
+    plot_train_and_test_losses(
+        private_train_loss_values, 
+        private_test_loss_values,
+        f"{exp_data_dir}/plots_data/{private_model_id_str}_per_sample_losses"
+    )
+    fpr, tpr = get_mia_model_roc_curve(
+        private_train_loss_values,
+        private_test_loss_values,
+        f"{exp_data_dir}/plots_data/{private_model_id_str}_mia_roc"
+    )
+    np.savez(f"{exp_data_dir}/plots_data/{private_model_id}_mia_roc_data.npz", fpr=fpr, tpr=tpr)
 
