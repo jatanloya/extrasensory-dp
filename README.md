@@ -84,6 +84,7 @@ private_args:
 
 <details>
 	<summary>List of supported model architectures</summary>
+	
 	```
 	simple_nn
 	cnn
@@ -92,6 +93,7 @@ private_args:
 
 <details>
 <summary>List of supported sensor measurements:</summary>
+
 	```
 	Acc
 	Gyro
@@ -108,6 +110,7 @@ private_args:
 
 <details>
   <summary>List of supported target labels:</summary>
+
   	```
 	PHONE_ON_TABLE
 	SITTING
