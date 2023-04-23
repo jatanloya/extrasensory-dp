@@ -1,4 +1,4 @@
-# ExtraSensory DP
+# Using Differential Privacy: Mobile Activity
 
 This repository contains code for the experiments of CMU's Engineering Privacy in Software course project: "Using Differential Privacy: Mobile Activity".
 
