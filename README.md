@@ -8,19 +8,20 @@ We apply differential privacy to human-activity recognition (HAR) machine learni
 
 ## Setup
 
-<a target="_blank" href="https://colab.research.google.com/github/jatanloya/extrasensory-dp/blob/main/extrasensorypytorch.ipynb">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>
-
 The code was developed and tested in the following environment:
 
 1. Operating System: Ubuntu 20.04 LTS
 1. Architecture: x86_64
 1. Python: 3.9
 
-Please note that training models with differential privacy on ARM architectures (e.g. Apple Silicon) can result in run-time errors.
+Please note that training models with differential privacy on ARM architectures (e.g. Apple Silicon) can result in run-time errors (due to Opacus).
 
-We have thus provided the experiment configuration files, trained models, and data used for generating visualizations shown in the project report. We have also provided a [Jupyter notebook](https://github.com/jatanloya/extrasensory-dp/blob/main/extrasensorypytorch.ipynb) for experimenting with the code (recommended to be run in Google Colab).
+We have thus provided the experiment configuration files, trained models, and data used for generating visualizations shown in the project report. 
+
+We have also provided a [Jupyter notebook](https://github.com/jatanloya/extrasensory-dp/blob/main/extrasensorypytorch.ipynb) for experimenting with the code:
+<a target="_blank" href="https://colab.research.google.com/github/jatanloya/extrasensory-dp/blob/main/extrasensorypytorch.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
 
 ### Dependencies
 
