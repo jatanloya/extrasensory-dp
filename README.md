@@ -16,7 +16,7 @@ The code was developed and tested in the following environment:
 
 Please note that training models with differential privacy on ARM architectures (e.g. Apple Silicon) can result in run-time errors (due to Opacus).
 
-We have thus provided the experiment configuration files, trained models, and data used for generating visualizations shown in the project report. 
+We have thus provided the experiment configuration files, trained models, and data used for generating visualizations shown in the project report: [Link to zipped data](https://drive.google.com/file/d/11F7eC4ae_Sv3k-eh6o9JSAuhkdO33Kwp/view?usp=share_link). 
 
 We have also provided a [Jupyter notebook](https://github.com/jatanloya/extrasensory-dp/blob/main/extrasensorypytorch.ipynb) for experimenting with the code:
 <a target="_blank" href="https://colab.research.google.com/github/jatanloya/extrasensory-dp/blob/main/extrasensorypytorch.ipynb">
