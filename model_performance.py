@@ -13,7 +13,7 @@ def compute_accuracy(model, device, dataloader, channels_format=None):
             data = data.to(device)
             target = target.to(device)
 
-            if channels_format == 'channels_last':
+            if channels_format == 'channels_first':
                 data = torch.unsqueeze(data, 2)
                 data = data.permute(0, 2, 1)
 

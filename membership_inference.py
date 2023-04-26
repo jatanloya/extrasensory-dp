@@ -17,7 +17,7 @@ def get_loss_values(model, device, dataloader, channels_format=None):
         for data, target in tqdm(dataloader):
             data, target = data.to(device), target.to(device)
 
-            if channels_format == 'channels_last':
+            if channels_format == 'channels_first':
                 data = torch.unsqueeze(data, 2)
                 data = data.permute(0, 2, 1)
 

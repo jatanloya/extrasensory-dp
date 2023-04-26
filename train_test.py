@@ -24,7 +24,7 @@ def train(args, model, device, train_loader,
             for _batch_idx, (data, target) in enumerate(tqdm(new_train_loader)):
                 data, target = data.to(device), target.to(device)
 
-                if channels_format == 'channels_last':
+                if channels_format == 'channels_first':
                     data = torch.unsqueeze(data, 2)
                     data = data.permute(0, 2, 1)
 
@@ -39,7 +39,7 @@ def train(args, model, device, train_loader,
         for _batch_idx, (data, target) in enumerate(tqdm(train_loader)):
             data, target = data.to(device), target.to(device)
 
-            if channels_format == 'channels_last':
+            if channels_format == 'channels_first':
                 data = torch.unsqueeze(data, 2)
                 data = data.permute(0, 2, 1)
 
@@ -71,7 +71,7 @@ def test(model, device, test_loader, channels_format=None):
         for data, target in tqdm(test_loader):
             data, target = data.to(device), target.to(device)
 
-            if channels_format == 'channels_last':
+            if channels_format == 'channels_first':
                 data = torch.unsqueeze(data, 2)
                 data = data.permute(0, 2, 1)
 

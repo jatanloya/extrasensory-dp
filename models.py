@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -27,7 +28,7 @@ def get_channels_format(model_type):
     if model_type == "simple_nn":
         return None
     elif model_type == "cnn":
-        return "channels_last"
+        return "channels_first"
     else:
         raise ValueError(f"{model_type} unsupported. Please use one of {supported_model_types} instead!")
 
@@ -76,3 +77,23 @@ class CNN(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.sigm(x)
         return x
+
+
+if __name__ == "__main__":
+    # plot architecture diagram for simple NN
+    dummy_input = torch.randn(64, 115)
+    num_classes = 3
+    simple_nn_model = SimpleNN(input_size=115, num_classes=num_classes)
+    input_names = ["Sensor Measurements"]
+    output_names = ["Activity"]
+    torch.onnx.export(simple_nn_model, dummy_input, "simple_nn.onnx", verbose=True,
+                      input_names=input_names, output_names=output_names)
+
+    # plot architecture diagram for CNN
+    dummy_input = torch.randn(64, 1, 115)  # channels first
+    num_classes = 3
+    cnn_model = CNN(input_size=1, num_classes=num_classes)
+    input_names = ["Sensor Measurements"]
+    output_names = ["Activity"]
+    torch.onnx.export(cnn_model, dummy_input, "cnn.onnx", verbose=True,
+                      input_names=input_names, output_names=output_names)
