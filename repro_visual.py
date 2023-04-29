@@ -31,7 +31,7 @@ def generate_test_acc_plot(
 def generate_mia_roc_plot(
     exp_data_dir, non_private_exp_id, 
     private_exp_ids, legend_labels, 
-    filename
+    filename, focus_region=None
 ):
     fig, ax = plt.subplots()
 
@@ -46,13 +46,36 @@ def generate_mia_roc_plot(
         data = np.load(mia_roc_data_filepath)
         fpr = data["fpr"]
         tpr = data["tpr"]
+
         ax.plot(fpr, tpr, label=label)
 
-    ax.set_title(f"Performance of Membership Inference Attack")
-    ax.set_xlabel("False Positive Rate")
-    ax.set_ylabel("True Positive Rate")
+        if focus_region is not None:
+            if focus_region == "Low FPR":
+                ax.set_yscale("log")
+                ax.set_xscale("log")
+                ax.set_ylim([1e-4, 1])
+                ax.set_xlim([1e-4, 1])
+            elif focus_region == "High TPR":
+                ax.set_ylim([0.7, 1])
+                ax.set_xlim([0.5, 1])
+
+    title = "Performance of Membership Inference Attack"
+    if focus_region is not None:
+        title = f"{title} ({focus_region} Region)"
+    ax.set_title(title)
+
+    if focus_region == "Low FPR":
+        ax.set_xlabel("False Positive Rate (log-scale)")
+        ax.set_ylabel("True Positive Rate (log-scale)")
+    else:
+        ax.set_xlabel("False Positive Rate")
+        ax.set_ylabel("True Positive Rate")
 
     ax.legend()
+
+    if focus_region is not None:
+        filename = filename + "_" + str(focus_region).lower().replace(" ", "_")
+
     plt.savefig(filename, dpi=500)
 
 
@@ -101,16 +124,16 @@ if __name__ == "__main__":
 
     ################################ MIA PERFORMANCE ################################
     legend_labels = [
-        "Non-private", 
-        # "Private, eps = 1.0", 
-        # "Private, eps = 0.5", 
+        "Non-private",
+        "Private, eps = 1.0",
+        "Private, eps = 0.5",
         "Private, eps = 0.125"
     ]
 
     non_private_simple_nn_exp_id = "simple_nn_epochs5_eps0_125_delta1e_5_clipnorm1.0"
     private_simple_nn_exp_ids = [
-        # "simple_nn_epochs5_eps1_0_delta1e_5_clipnorm1.0",
-        # "simple_nn_epochs5_eps0_5_delta1e_5_clipnorm1.0",
+        "simple_nn_epochs5_eps1_0_delta1e_5_clipnorm1.0",
+        "simple_nn_epochs5_eps0_5_delta1e_5_clipnorm1.0",
         "simple_nn_epochs5_eps0_125_delta1e_5_clipnorm1.0",
     ]
     simple_nn_filename = f"{exp_data_dir}/plots_data/all_simple_nn_mia"
@@ -123,10 +146,28 @@ if __name__ == "__main__":
         filename=simple_nn_filename
     )
 
+    generate_mia_roc_plot(
+        exp_data_dir=exp_data_dir,
+        non_private_exp_id=non_private_simple_nn_exp_id,
+        private_exp_ids=private_simple_nn_exp_ids,
+        legend_labels=legend_labels,
+        filename=simple_nn_filename,
+        focus_region="Low FPR"
+    )
+
+    generate_mia_roc_plot(
+        exp_data_dir=exp_data_dir,
+        non_private_exp_id=non_private_simple_nn_exp_id,
+        private_exp_ids=private_simple_nn_exp_ids,
+        legend_labels=legend_labels,
+        filename=simple_nn_filename,
+        focus_region="High TPR"
+    )
+
     non_private_cnn_exp_id = "cnn_epochs10_eps0_125_delta1e_5_clipnorm1.0"
     private_cnn_exp_ids = [
-            # "cnn_epochs10_eps1_0_delta1e_5_clipnorm1.0",
-            # "cnn_epochs10_eps0_5_delta1e_5_clipnorm1.0",
+            "cnn_epochs10_eps1_0_delta1e_5_clipnorm1.0",
+            "cnn_epochs10_eps0_5_delta1e_5_clipnorm1.0",
             "cnn_epochs10_eps0_125_delta1e_5_clipnorm1.0",
             ]
     cnn_filename = f"{exp_data_dir}/plots_data/all_cnn_mia"
@@ -137,4 +178,22 @@ if __name__ == "__main__":
         private_exp_ids=private_cnn_exp_ids,
         legend_labels=legend_labels,
         filename=cnn_filename
+    )
+
+    generate_mia_roc_plot(
+        exp_data_dir=exp_data_dir,
+        non_private_exp_id=non_private_cnn_exp_id,
+        private_exp_ids=private_cnn_exp_ids,
+        legend_labels=legend_labels,
+        filename=cnn_filename,
+        focus_region="Low FPR"
+    )
+
+    generate_mia_roc_plot(
+        exp_data_dir=exp_data_dir,
+        non_private_exp_id=non_private_cnn_exp_id,
+        private_exp_ids=private_cnn_exp_ids,
+        legend_labels=legend_labels,
+        filename=cnn_filename,
+        focus_region="High TPR"
     )
