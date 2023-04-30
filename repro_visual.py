@@ -7,6 +7,9 @@ def generate_test_acc_plot(
     exp_data_dir, non_private_exp_id,
     private_exp_ids, legend_labels,
     filename):
+    """
+    Plot test accuracies per epoch for non-private and private models.
+    """
     fig, ax = plt.subplots()
 
     for i, label in enumerate(legend_labels):
@@ -31,8 +34,10 @@ def generate_test_acc_plot(
 def generate_mia_roc_plot(
     exp_data_dir, non_private_exp_id, 
     private_exp_ids, legend_labels, 
-    filename, focus_region=None
-):
+    filename, focus_region=None):
+    """
+    Plot membership inference attack ROC curves for non-private and private models.
+    """
     fig, ax = plt.subplots()
 
     for i, label in enumerate(legend_labels):

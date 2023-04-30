@@ -4,6 +4,9 @@ import torch.nn.functional as F
 
 
 def get_input_size(model_type, input_size):
+    """
+    Return modified input size accepted by model type.
+    """
     supported_model_types = ["simple_nn", "cnn"]
     if model_type == "simple_nn":
         return input_size
@@ -14,6 +17,9 @@ def get_input_size(model_type, input_size):
 
 
 def get_model_obj(model_type, input_size, num_classes):
+    """
+    Return corresponding model object for the model type.
+    """
     supported_model_types = ["simple_nn", "cnn"]
     if model_type == "simple_nn":
         return SimpleNN(input_size, num_classes)
@@ -24,6 +30,9 @@ def get_model_obj(model_type, input_size, num_classes):
 
 
 def get_channels_format(model_type):
+    """
+    Return format of input samples required by the model type.
+    """
     supported_model_types = ["simple_nn", "cnn"]
     if model_type == "simple_nn":
         return None
@@ -80,7 +89,7 @@ class CNN(nn.Module):
 
 
 if __name__ == "__main__":
-    # plot architecture diagram for simple NN
+    # Plot architecture diagram for simple NN
     dummy_input = torch.randn(64, 115)
     num_classes = 3
     simple_nn_model = SimpleNN(input_size=115, num_classes=num_classes)
@@ -89,7 +98,7 @@ if __name__ == "__main__":
     torch.onnx.export(simple_nn_model, dummy_input, "simple_nn.onnx", verbose=True,
                       input_names=input_names, output_names=output_names)
 
-    # plot architecture diagram for CNN
+    # Plot architecture diagram for CNN
     dummy_input = torch.randn(64, 1, 115)  # channels first
     num_classes = 3
     cnn_model = CNN(input_size=1, num_classes=num_classes)

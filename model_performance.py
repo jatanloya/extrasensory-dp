@@ -4,6 +4,15 @@ import matplotlib.pyplot as plt
 
 
 def compute_accuracy(model, device, dataloader, channels_format=None):
+    """
+    Compute accuracy of the model on the specified dataset.
+
+    :param model: Model object.
+    :param device: Device (e.g. CPU, CUDA) that was used for training the model.
+    :param dataloader: Dataset for which accuracy needs to be computed.
+    :param channels_format: Format of input samples that the model object requires.
+    :return:
+    """
     model.eval()
 
     num_correct = 0
@@ -33,6 +42,14 @@ def compute_accuracy(model, device, dataloader, channels_format=None):
 
 
 def plot_train_and_test_loss_per_epoch(model_id, train_losses, test_losses, filename):
+    """
+    Plot train and test loss values per epoch for the specified model.
+
+    :param model_id: Identifier for model.
+    :param train_losses: Average train loss per epoch.
+    :param test_losses: Average test loss per epoch.
+    :param filename: Filename where plot will be saved.
+    """
     fig, ax = plt.subplots()
 
     ax.plot(train_losses, label='Train Loss')
@@ -47,6 +64,14 @@ def plot_train_and_test_loss_per_epoch(model_id, train_losses, test_losses, file
 
 
 def plot_train_and_test_acc_per_epoch(model_id, train_accs, test_accs, filename):
+    """
+    Plot train and test accuracies per epoch for the specified model.
+
+    :param model_id: Identifier for model.
+    :param train_accs: Train accuracy per epoch.
+    :param test_accs: Test accuracy per epoch.
+    :param filename: Filename where plot will be saved.
+    """
     fig, ax = plt.subplots()
 
     ax.plot(train_accs, label='Train Acc')

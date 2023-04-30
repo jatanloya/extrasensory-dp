@@ -11,12 +11,25 @@ from model_performance import compute_accuracy
 def train(args, model, device, train_loader,
           optimizer, privacy_engine, epoch,
           channels_format=None):
+    """
+    Train a model with or without differential privacy.
+
+    :param args: Argument object with hyperparameters for non-private and private training.
+    :param model: Model object that needs to be trained.
+    :param device: Device (e.g. CPU, CUDA) to be used for training.
+    :param train_loader: Training dataset.
+    :param optimizer: Optimizer (non-private or private) to be used for training.
+    :param privacy_engine: PrivacyEngine object, used to compute the resultant privacy budget.
+    :param epoch: Current epoch of training.
+    :param channels_format: Format of input samples that the model object requires.
+    :return: Loss of the model on the training dataset, averaged over all samples.
+    """
     model.train(True)
-    criterion = nn.BCELoss()  # can't use cross entropy for multi-label
+    criterion = nn.BCELoss()  # Can't use cross entropy for multi-label
     
     losses = []
     if not args["disable_dp"]:
-        # to avoid OOM errors for private training
+        # Avoid OOM errors for private training: encapsulate data loader using Opacus BatchMemoryManager
         with BatchMemoryManager(
             data_loader=train_loader, max_physical_batch_size=2, optimizer=optimizer
         ) as new_train_loader:
@@ -55,6 +68,7 @@ def train(args, model, device, train_loader,
         print(
             f"Train Epoch: {epoch} \t"
             f"Loss: {np.mean(losses):.6f} "
+            # f"(Epsilon = {privacy_engine.accountant.get_epsilon(delta=args['delta'])}, Delta = {args['delta']})"
             f"(Epsilon = {args['epsilon']}, Delta = {args['delta']})"
         )
     else:
@@ -64,6 +78,15 @@ def train(args, model, device, train_loader,
 
 
 def test(model, device, test_loader, channels_format=None):
+    """
+    Compute accuracy of a model on the test dataset.
+
+    :param model: Model object that needs to be evaluated.
+    :param device: Device (e.g. CPU, CUDA) that was used for training the model.
+    :param test_loader: Test dataset.
+    :param channels_format: Format of input samples that the model object requires.
+    :return: Loss of the model on the test dataset, averaged over all samples.
+    """
     model.eval()
     criterion = nn.BCELoss()
     losses = []
@@ -84,11 +107,26 @@ def test(model, device, test_loader, channels_format=None):
     return test_loss
 
 
-def train_test_model(model, args, device, train_dataloader, test_dataloader, optimizer, privacy_engine, channels_format):
+def train_test_model(model, args, device, train_dataloader, test_dataloader,
+                     optimizer, privacy_engine, channels_format):
+    """
+    Perform a train step and a test step for the model in every epoch.
+
+    :param model: Model object that needs to be trained.
+    :param args: Argument object with hyperparameters for non-private and private training.
+    :param device: Device (e.g. CPU, CUDA) to be used for training.
+    :param train_dataloader: Training dataset.
+    :param test_dataloader: Test dataset.
+    :param optimizer: Optimizer (non-private or private) to be used for training.
+    :param privacy_engine: PrivacyEngine object, used to compute the resultant privacy budget.
+    :param channels_format: Format of input samples that the model object requires.
+    :return: Trained model object, train and test accuracies per epoch, average train and test loss values per epoch.
+    """
     train_losses, test_losses = [], []
     train_accs, test_accs = [], []
 
     for epoch in range(1, args['epochs'] + 1):
+        # Train step
         train_loss = train(
             args,
             model,
@@ -104,6 +142,7 @@ def train_test_model(model, args, device, train_dataloader, test_dataloader, opt
         train_acc = compute_accuracy(model, device, train_dataloader, channels_format)
         train_accs.append(train_acc)
 
+        # Test step
         test_loss = test(model, device, test_dataloader, channels_format)
         test_losses.append(test_loss)
 

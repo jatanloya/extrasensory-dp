@@ -109,6 +109,14 @@ def read_user_data(directory, uuid):
 
 
 def get_sensor_names_from_features(feature_names):
+    """
+    Map feature names to sensor names that will be recognized by later pre-processing functions.
+
+    Written by Yonatan Vaizman, May 2017.
+
+    :param feature_names: Feature names parsed from the raw data files.
+    :return: Map of feature names to sensor names.
+    """
     feat_sensor_names = np.array([None for feat in feature_names])
     for (fi, feat) in enumerate(feature_names):
         if feat.startswith('raw_acc'):
@@ -153,6 +161,12 @@ def get_sensor_names_from_features(feature_names):
 
 
 def get_uuids_from_filepaths(uuid_filepaths):
+    """
+    Get list of user UUIDs whose data needs to be loaded.
+
+    :param uuid_filepaths: Filepaths for lists of user UUIDs whose data needs to be loaded.
+    :return: List of user UUIDs.
+    """
     uuids = []
     for filepath in uuid_filepaths:
         with open(filepath, 'r', newline='\n') as f:
@@ -164,6 +178,16 @@ def get_uuids_from_filepaths(uuid_filepaths):
 
 
 def project_features_to_selected_sensors(X, feat_sensor_names, sensors_to_use):
+    """
+    Select and return particular sensor measurements (sensors_to_use) for a user.
+
+    Written by Yonatan Vaizman, May 2017.
+
+    :param X: Sensor measurements i.e. features corresponding to the user.
+    :param feat_sensor_names: Map of feature names to sensor names.
+    :param sensors_to_use: Sensor measurements to be loaded.
+    :return:
+    """
     use_feature = np.zeros(len(feat_sensor_names), dtype=bool)
     for sensor in sensors_to_use:
         is_from_sensor = (feat_sensor_names == sensor)
@@ -174,12 +198,30 @@ def project_features_to_selected_sensors(X, feat_sensor_names, sensors_to_use):
 
 
 def estimate_standardization_params(X_train):
+    """
+    Estimate mean and standard deviation for normalizing features of the training dataset.
+
+    Written by Yonatan Vaizman, May 2017.
+
+    :param X_train: Training dataset.
+    :return: Mean and standard deviation.
+    """
     mean_vec = np.nanmean(X_train, axis=0)
     std_vec = np.nanstd(X_train, axis=0)
     return (mean_vec, std_vec)
 
 
 def standardize_features(X, mean_vec, std_vec):
+    """
+    Normalize dataset using pre-computed mean and standard deviation.
+
+    Written by Yonatan Vaizman, May 2017.
+
+    :param X: Dataset to be normalized.
+    :param mean_vec: Mean of training dataset features.
+    :param std_vec: Standard deviation of training dataset features.
+    :return: Normalized dataset.
+    """
     # Subtract the mean, to centralize all features around zero:
     X_centralized = X - mean_vec.reshape((1, -1))
     # Divide by the standard deviation, to get unit-variance for all features:
@@ -190,6 +232,20 @@ def standardize_features(X, mean_vec, std_vec):
 
 
 def preprocess_data(X, Y, M, feat_sensor_names, label_names, sensors_to_use, target_labels):
+    """
+    Pre-process dataset to ignore samples with missing features or labels.
+
+    Modified version of the function written by Yonatan Vaizman, May 2017.
+
+    :param X: Sensor measurements i.e. features corresponding to the user.
+    :param Y: Context labels for measurements at each timestamp.
+    :param M: Whether a label is missing for a particular timestamp's measurements.
+    :param feat_sensor_names: Map of feature names to sensor names.
+    :param label_names: Names of the context labels (i.e. activity).
+    :param sensors_to_use: Sensor measurements to be loaded.
+    :param target_labels: Labels to be included for the prediction task.
+    :return: Dataset after pre-processing.
+    """
     # Project the feature matrix to the features from the desired sensors:
     X = project_features_to_selected_sensors(X, feat_sensor_names, sensors_to_use)
 
@@ -214,6 +270,16 @@ def preprocess_data(X, Y, M, feat_sensor_names, label_names, sensors_to_use, tar
 
 
 def get_train_and_test_data(directory, train_uuids, test_uuids, sensors_to_use, target_labels):
+    """
+
+    :param directory: Directory where user data files are stored.
+    :param train_uuids: List of UUIDs of users in the training dataset.
+    :param test_uuids: List of UUIDs of users in the test dataset.
+    :param sensors_to_use: Sensor measurements to be loaded.
+    :param target_labels: Labels to be included for the prediction task.
+    :return: Processed training and test datasets.
+    """
+    # Create training dataset
     X_train, y_train = [], []
     for uuid in train_uuids:
         X, Y, M, timestamps, feature_names, label_names = read_user_data(directory, uuid)
@@ -228,6 +294,7 @@ def get_train_and_test_data(directory, train_uuids, test_uuids, sensors_to_use, 
     mean_vec, std_vec = estimate_standardization_params(X_train)
     X_train = standardize_features(X_train, mean_vec, std_vec)
 
+    # Create test dataset
     X_test, y_test = [], []
     for uuid in test_uuids:
         X, Y, M, timestamps, feature_names, label_names = read_user_data(directory, uuid)
@@ -240,6 +307,7 @@ def get_train_and_test_data(directory, train_uuids, test_uuids, sensors_to_use, 
     # Apply same standardization for test data
     X_test = standardize_features(X_test, mean_vec, std_vec)
 
+    # Convert to numpy arrays
     X_train = np.array(X_train, np.float32)
     y_train = np.array(y_train, dtype=int)
     X_test = np.array(X_test, np.float32)
