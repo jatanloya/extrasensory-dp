@@ -19,7 +19,7 @@ target_labels:
   - "SITTING"
 batch_size: 64
 shuffle_train: Yes
-epochs: 25
+epochs: 10
 lr: 0.0005
 private_args:
   epsilon: 0.125
