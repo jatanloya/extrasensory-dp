@@ -6,7 +6,7 @@ PyYAML
 scikit-learn
 scipy
 seaborn
-torch==2.2.0
+torch==2.7.0
 torchaudio
 torchvision
 tqdm
